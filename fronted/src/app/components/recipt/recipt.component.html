@@ -1,0 +1,40 @@
+<form [formGroup]="receiptForm" (ngSubmit)="saveReceipt()">
+    <div class="forms">
+        <label>לקוח</label>
+        <select formControlName="customer">
+            <option></option>
+            <option *ngFor="let customer of customers">{{customer.name}}</option>
+        </select>
+    </div>
+    <div class="forms">
+        <label>תאריך</label><input type="date" formControlName="date">
+    </div>
+    <div class="forms">
+        <label>אופן תשלום</label><select formControlName="paymentMethods">
+            <option value="כרטיס אשראי">אשראי</option>
+            <option value="מזומן">מזומן</option>
+            <option value="צ'ק">צ'ק</option>
+        </select>
+    </div>
+    <div class="forms">
+        <label for="date">סכום</label><input type="number" formControlName="sum" min="1">
+    </div>
+    <div class="forms">
+        <label>כמות</label><input type="number" formControlName="amount" min="1">
+    </div>
+    <div class="forms">
+        <label>פרטים</label><textarea formControlName="details"></textarea>
+    </div>
+    <div><button type="submit">שמירה</button></div>
+</form>
+<div class="customer">
+    <input (click)="this.addingNewCustomer=true" value="הוספת לקוח">
+    <div *ngIf="addingNewCustomer">
+        <div>
+            <label>שם</label><input type="text" [(ngModel)]="newCustomerName">
+        </div>
+        <button (click)="addCustomer()">שמירה</button>
+    </div>
+</div>
+<div>
+</div>

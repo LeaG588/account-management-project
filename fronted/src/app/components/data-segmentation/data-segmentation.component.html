@@ -1,0 +1,62 @@
+<div class="all">
+    <input type="button" value="הכנסות" (click)="flagReceipt = true; flagExpense = false" class="header">
+    <input type="button" value="הוצאות" (click)="flagReceipt = false ;flagExpense = true " class="header">
+</div>
+<div *ngIf="flagExpense||flagReceipt">
+    <div class="div"><input type="button" value="לפי שנה" (click)="flagYear = true"></div>
+    <div *ngIf="flagYear">
+        <div class="div"> <div><input type="number" (change)="value=$event" placeholder="הקש שנה">
+            </div><input type="submit" (click)="getByYear()">
+        </div>
+    </div>
+    <div class="div"><input type="button" value="לפי חודש" (click)="flagMonth = true">
+    </div>
+    <div *ngIf="flagMonth">
+        <div class="div"> <div><input type="number" (change)="value=$event" placeholder="הקש חודש">
+        </div>    <input type="submit" (click)="getByMonth()">
+        </div>
+    </div>
+
+    <div class="div">
+        <input type="button" value="בין טווח תאריכים" (click)="flag2date = true">
+    </div>
+    <div *ngIf="flag2date">
+        <div class="div" *ngIf="flag2date">
+            <label>התחלה</label>
+            <div> <input type="date" placeholder="תאריך התחלה" (change)="startDate = $event">
+            </div><label>סיום</label>
+            <div><input type="date" placeholder="תאריך סיום" (change)="endDate = $event">
+            </div><input type="submit" (click)="getBy2date()">
+        </div>
+    </div>
+    <div class="div" *ngIf="flagReceipt">
+        <input type="button" value="לפי לקוח" (click)="flagCust=true">
+        <div class="div">
+            <select (click)="getByCust($event)" *ngIf="flagCust">
+                <option value="default">בחר לקוח</option>
+                <option *ngFor="let customer of customers" [value]="customer.name">{{ customer.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="div2" *ngIf="flagExpense">
+        <div class="receiptDisplay" *ngFor="let e of this.valueResponse.expenses">
+            <div>ספק: {{e.supplier}}</div>
+            <div>סכום: {{e.sum}}</div>
+            <div>תאריך: {{e.date}}</div>
+            <div>כמות: {{e.amount}}</div>
+            <div>שולם ב{{e.paymentMethods}}</div>
+            <div>פרטים: {{e.details}}</div>
+        </div>
+    </div>
+    <div class="div2" *ngIf="flagReceipt">
+        <div class="receiptDisplay" *ngFor="let r of this.valueResponse.receipt">
+            <div>לקוח: {{r.customer}}</div>
+            <div>סכום: {{r.sum}}</div>
+            <div>תאריך: {{r.date}}</div>
+            <div>כמות: {{r.amount}}</div>
+            <div>שולם ב{{r.paymentMethods}}</div>
+            <div>פרטים: {{r.details}}</div>
+        </div>
+    </div>
+</div>
